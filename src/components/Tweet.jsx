@@ -7,7 +7,8 @@ const Tweet = ({tweet}) => {
     return ( 
         <div>
             <textarea onChange={((e) => setMessageTweet(e.target.value))} type="text" name="message" 
-            value={messageTweets || tweet.message} />
+            value={messageTweets || tweet.message} 
+            />
             <button onClick={() => updateNewTweet(tweet)}>Guardar cambios</button>
         </div>
      );

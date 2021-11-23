@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import {firestore} from "../firebase"
+import {firestore, storage} from "../firebase"
 
 export const AppContext = createContext();
 
@@ -9,37 +9,62 @@ export const AppProvider = (props) => {
     const [messageTweet, setMessageTweet] = useState("")
     const [userTweet, setUserTweet] = useState("")
     const [edit, setEdit] = useState(false)
+    const [file, setFile] = useState ({})
+    const [progress, setProgress] = useState (0)
 
-  const getAllTweets = () => {
-    firestore.collection("tweets")
+    
+
+//   const getAllTweets = () => {
+//     firestore.collection("tweets")
        // .limit(1)
       // .where('likes', '>', number)
       // .orderBy('likes', 'asc')
       // .startAt(30)
       // .endAt(50)
-    .get()
-     .then((snapshot) => {
-        const tweets = snapshot.docs.map((doc) => {
-          return {
-            message: doc.data().message,
-            user: doc.data().user,
-            likes: doc.data().likes || 0,
-            id: doc.id
-        }
-      });
-      setTweets(tweets)
-    })
-  }
+//     .get()
+//      .then((snapshot) => {
+//         const tweets = snapshot.docs.map((doc) => {
+//           return {
+//             message: doc.data().message,
+//             user: doc.data().user,
+//             likes: doc.data().likes || 0,
+//             image: doc.data().image || false,
+//             id: doc.id
+//         }
+//       });
+//       setTweets(tweets)
+//     })
+//   }
 
   const createTweet = (e) => {
     // setEdit(false)
     e.preventDefault();
-    firestore.collection("tweets")
-    .add(body)
-    .then(() =>{
-      getAllTweets();
+    const uploadTask = storage.ref().child(`/tweets/img${file.name}`)
+    .put(file);
+
+    uploadTask
+    .on("state_changed", (snapshot) => {
+        /////////////Cuando se está cargando la imagen
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress)
+    }, 
+    (err) => {
+        console.error(err.message)
+    }, () => {
+        ////////// Cuando la imagen fue cargada, se sube la URL a firestore
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            if (Object.entries(file).length === 0) {
+                url = false;
+            }
+            firestore.collection("tweets")
+            .add({...body, image: url})
+            .then(() => {
+                console.log("Imagen cargada")
+            })
+            .catch((err) => {console.error(err.message)})
+        }) 
+        setProgress(0)
     })
-    .catch((err) => {console.error(err.message)})
   }
 
   const deleteTweet = (id) => {
@@ -47,7 +72,7 @@ export const AppProvider = (props) => {
     .doc(id)
     .delete()
     .then(() =>{
-      getAllTweets();
+    //   getAllTweets();
     })
     .catch((err) => {console.error(err.message)})
   }
@@ -91,6 +116,15 @@ export const AppProvider = (props) => {
   //   // console.log(message)
   // }
 
+  const handleUpload = (e) => {
+    console.log(e)
+    setFile(e.target.files[0])
+    // storage.ref().child(`/tweets/img${e.target.files[0].name}`)
+    // .put(e.target.files[0])
+    // .then(() => {
+    //     console.log("¡Imagen cargada!")
+    // })
+  }
 
   useEffect(() => {
     // getAllTweets()
@@ -101,6 +135,7 @@ export const AppProvider = (props) => {
           message: doc.data().message,
           user: doc.data().user,
           likes: doc.data().likes,
+          image: doc.data().image || false,
           id: doc.id
         }
       });
@@ -124,6 +159,6 @@ export const AppProvider = (props) => {
   //   setUserTweet(e.target.value)
   // }
   return (
-    <AppContext.Provider value={{tweets, messageTweet, setMessageTweet, createTweet, deleteTweet, updateTweet, handleChange, body, updateNewTweet, edit, setEdit}}>{props.children}</AppContext.Provider>
+    <AppContext.Provider value={{progress, handleUpload, tweets, messageTweet, setMessageTweet, createTweet, deleteTweet, updateTweet, handleChange, body, updateNewTweet, edit, setEdit}}>{props.children}</AppContext.Provider>
   );
 };

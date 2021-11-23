@@ -13,6 +13,7 @@ const Tweets = () => {
           tweets.map((tweet, i) => {
             return (
               <div id={tweet.id} key={i}>
+                {tweet.image && <img width="100" height="100" src={tweet.image} alt="profile picture" />}
                 <p>User: {tweet.user}</p>
                 {edit ? <Tweet tweet={tweet}/> : <p>{tweet.message}</p> }
                 <p>Likes: {tweet.likes}</p>
