@@ -1,11 +1,11 @@
 import React from "react";
-import Tweets from "./components/Tweets"
+import Main from "./components/Main";
 
 function App() {
   
   return (
     <div className="App">
-      <Tweets/>
+      <Main/>
     </div>
   );
 }
