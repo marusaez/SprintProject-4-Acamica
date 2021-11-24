@@ -22,9 +22,7 @@ const Tweets = () => {
                 <button onClick={() => deleteTweet(tweet.id)}>Eliminar tweet</button>
                 <button onClick={() => updateTweet(tweet)}>Me gusta</button>
                 <hr />
-                <button>
-                    <Link to="/">Volver al Home</Link>
-                </button>
+                <Link to="/">Volver al Home</Link>
               </div>
               
             )

@@ -13,9 +13,7 @@ const Login = () => {
                 <hr />
                 <input type="submit" value="Ingresar" />
                 <hr />
-                <button>
-                    <Link to="/">Volver al Home</Link>
-                </button>
+                <Link to="/">Volver al Home</Link>
             </form>
         </div>
      );

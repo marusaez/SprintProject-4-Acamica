@@ -15,9 +15,7 @@ const Register = () => {
                 <hr />
                 <input type="submit" value="Registrar datos" />
                 <hr />
-                <button>
-                    <Link to="/">Volver al Home</Link>
-                </button>
+                <Link to="/">Volver al Home</Link>
             </form>
         </div>
      );
