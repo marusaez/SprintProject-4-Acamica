@@ -3,9 +3,15 @@ import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import SubmitTweet from "./SubmitTweet"
 import Tweet from './Tweet';
+import {useProtectedContext} from "./Protected"
 
 const Tweets = () => {
     const {deleteTweet, updateTweet, tweets, edit, setEdit} = useContext(AppContext)
+    
+
+    // if (!isLogged) {
+    //   return <p>No logueado</p>
+    // }
 
     return ( 
     <div className="Tweets">
