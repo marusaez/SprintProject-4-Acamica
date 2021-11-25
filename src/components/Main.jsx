@@ -11,10 +11,10 @@ function Main() {
   return (
     <main className="App">
      <Routes>
-        <Route exact path="/" component={Home}/>
-        <Route exact path="/Tweets" component={Tweets}/>
-        <Route exact path="/Login" component={Login}/>
-        <Route exact path="/Register" component={Register}/>
+        <Route exact path="/" element={<Home/>}/>
+        <Route exact path="/Tweets" element={<Tweets/>}/>
+        <Route exact path="/Login" element={<Login/>}/>
+        <Route exact path="/Register" element={<Register/>}/>
     </Routes>
     </main>
   );

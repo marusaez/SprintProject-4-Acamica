@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import SubmitTweet from "./SubmitTweet"
 import Tweet from './Tweet';
@@ -28,7 +27,6 @@ const Tweets = () => {
                 <button onClick={() => deleteTweet(tweet.id)}>Eliminar tweet</button>
                 <button onClick={() => updateTweet(tweet)}>Me gusta</button>
                 <hr />
-                <Link to="/">Volver al Home</Link>
               </div>
               
             )

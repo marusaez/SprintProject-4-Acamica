@@ -14,9 +14,9 @@ ReactDOM.render(
       <AppProvider>
         <ProtectedContext>
           {/* <Tweets/> */}
-          {/* <App /> */}
+          <App />
         {/* <Register/> */}
-          <Login/>
+          {/* <Login/> */}
         </ProtectedContext>
       </AppProvider>
     </BrowserRouter>

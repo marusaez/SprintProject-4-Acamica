@@ -1,4 +1,5 @@
 import React, {useContext} from 'react'
+import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 
 const SubmitTweet = () => {
@@ -14,6 +15,9 @@ const SubmitTweet = () => {
         <hr />
         <input onChange={handleChange} defaultValue={body.user} type="text" name="user"></input>
         <input type="submit" value="Send" />
+        <hr />
+        <Link to="/">Volver al Home</Link>
+
     </form>
      );
 }
