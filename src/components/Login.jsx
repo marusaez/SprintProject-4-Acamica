@@ -1,43 +1,73 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { firestore, auth } from '../firebase';
-import {useProtectedContext} from "./Protected"
-
-
+import { firestore, auth, loginGoogle, logout } from "../firebase";
+import { useProtectedContext } from "./Protected";
+import { AppContext } from "./AppContext";
 
 const Login = () => {
-    const [body, setBody] = useState({});
+  const { user } = useContext(AppContext);
 
-    let [user, setUser] = useProtectedContext();
+  const [body, setBody] = useState({});
 
-    const login = (e) => {
-        e.preventDefault();
-        auth.signInWithEmailAndPassword(body.email, body.password)
-        .then((userCredential) => {
-            setUser(userCredential.user)
-        })
-        .catch((err) => {console.error(err)})
-    }
+  /// LOGIN CREANDO USUARIO DE FORMA MANUAL
 
-    const handleInput = (e) => {
-        setBody({...body, [e.target.name] : e.target.value})
-    }
+  //   let [user, setUser] = useProtectedContext();
+  //
+  //   const login = (e) => {
+  // e.preventDefault();
+  // auth
+  //   .signInWithEmailAndPassword(body.email, body.password)
+  //   .then((userCredential) => {
+  // setUser(userCredential.user);
+  //   })
+  //   .catch((err) => {
+  // console.error(err);
+  //   });
+  //   };
 
-    return ( 
+//   const handleInput = (e) => {
+    // setBody({ ...body, [e.target.name]: e.target.value });
+//   };
+
+
+
+  return (
+    <div>
+      {user ? (
         <div>
-            {user && <h3>Te has logueado exitosamente</h3>}
-            <p>Por favor ingresa tus datos para iniciar sesión:</p>
-            <form onSubmit={login}>
-                <input onChange={handleInput} type="email" name="email" placeholder="Mail"/>
-                <hr />
-                <input onChange={handleInput} name="password" placeholder="Contraseña" />
-                <hr />
-                <input type="submit" value="Ingresar" />
-                <hr />
-                <Link to="/">Volver al Home</Link>
-            </form>
+          <img src={user.photoURL} alt="Foto de perfil" />
+          <p>¡Hola {user.displayName}!</p>
+          <button onCLick={logout}>Logout</button>
+          <br />
+          <Link to="/">Volver al Home</Link>
         </div>
-     );
-}
- 
+      ) : (
+        <div>
+          <button onClick={loginGoogle}>Login con Google</button>
+          <br />
+          <Link to="/">Volver al Home</Link>
+          {/* <p>Por favor ingresa tus datos para iniciar sesión:</p>
+          <form onSubmit={loginGoogle} >
+            <input
+              onChange={handleInput}
+              type="email"
+              name="email"
+              placeholder="Mail"
+            />
+            <hr />
+            <input
+              onChange={handleInput}
+              name="password"
+              placeholder="Contraseña"
+            />
+            <hr />
+            <input type="submit" value="Ingresar" />
+            <hr />
+          </form> */}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default Login;
