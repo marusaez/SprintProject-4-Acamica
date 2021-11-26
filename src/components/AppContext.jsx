@@ -177,6 +177,7 @@ export const AppProvider = (props) => {
     <AppContext.Provider
       value={{
         user,
+        setUser,
         progress,
         handleUpload,
         tweets,
