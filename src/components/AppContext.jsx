@@ -147,6 +147,7 @@ export const AppProvider = (props) => {
         const tweets = snapshot.docs.map((doc) => {
           return {
             message: doc.data().message,
+            // uid: doc.data().user.uid,
             user: doc.data().user,
             likes: doc.data().likes,
             image: doc.data().image || false,

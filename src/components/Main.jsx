@@ -2,9 +2,9 @@ import React from "react";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {Routes, Route } from "react-router-dom";
 import Tweets from "./Tweets"
-import Login from "./Login"
-import Register from "./Register"
-import Home from "./Home";
+import Login from "../pages/Login"
+import Register from "../pages/Register"
+import Home from "../pages/Home";
 
 function Main() {
   

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { firestore, auth, loginGoogle, logout } from "../firebase";
-import { useProtectedContext } from "./Protected";
-import { AppContext } from "./AppContext";
+import { useProtectedContext } from "../components/Protected";
+import { AppContext } from "../components/AppContext";
 
 const Login = () => {
   const { user, setUser } = useContext(AppContext);
@@ -42,7 +42,7 @@ const Login = () => {
         <div>
           <img src={user.photoURL} alt="Foto de perfil" />
           <p>¡Hola {user.displayName}!</p>
-          <button onCLick={logout}>Logout</button>
+          <button onClick={logout}>Logout</button>
           <br />
           <Link to="/">Volver al Home</Link>
         </div>
