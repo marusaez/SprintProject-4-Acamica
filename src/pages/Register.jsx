@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { firestore, auth } from "../firebase";
+import { useProtectedContext } from "../components/Protected";
+
 
 const Register = () => {
   const [body, setBody] = useState({});
+  let [user, setUser] = useProtectedContext();
+
 
   const register = (e) => {
     e.preventDefault();
@@ -11,6 +15,12 @@ const Register = () => {
       .createUserWithEmailAndPassword(body.email, body.password)
       .then((userCredential) => {
         console.log(userCredential);
+        let {uid, email} = userCredential.user;
+        firestore
+        .collection("users")
+        .add({email, uid})
+        .then(() => console.log("Se creó el usuario"))
+        .catch((err) => console.error(err.message))
       })
       .catch((err) => {
         console.error(err);

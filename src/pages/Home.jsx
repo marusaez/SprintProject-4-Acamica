@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../firebase";
+
 
 const Home = () => {
   return (
@@ -19,6 +21,8 @@ const Home = () => {
       <button>
         <Link to="/Tweets">Ir al timeline</Link>
       </button>
+      <hr />
+      <button onClick={logout}>Logout</button>
     </div>
   );
 };

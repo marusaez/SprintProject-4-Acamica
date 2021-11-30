@@ -5,12 +5,13 @@ import Tweet from "./Tweet";
 import { useProtectedContext } from "./Protected";
 
 const Tweets = () => {
-  const { deleteTweet, updateTweet, tweets, edit, setEdit, user } =
+  const { body, deleteTweet, updateTweet, tweets, edit, setEdit, user } =
     useContext(AppContext);
 
   // if (!isLogged) {
   //   return <p>No logueado</p>
   // }
+  console.log(body)
 
   return (
     <div className="Tweets">
@@ -28,6 +29,7 @@ const Tweets = () => {
       </div>
       <div>
         {tweets.map((tweet, i) => {
+          console.log(tweet)
           return (
             <div id={tweet.id} key={i}>
               {tweet.image && (
@@ -38,13 +40,20 @@ const Tweets = () => {
                   alt="profile picture"
                 />
               )}
-              <p>User: {tweet.user}</p>
-              {edit ? <Tweet tweet={tweet} /> : <p>{tweet.message}</p>}
+              <p>Usuario: {tweet.autor}</p>
+              {/* {edit ? <Tweet tweet={tweet} /> : <p>{tweet.message}</p>} */}
+              <p>{tweet.tweet}</p>
+              {/* <p>{body.tweet}</p> */}
               <p>Likes: {tweet.likes}</p>
-              <button onClick={() => setEdit(!edit)}>Actualizar tweet</button>
-              <button onClick={() => deleteTweet(tweet.id)}>
+              {/* <button onClick={() => setEdit(!edit)}>Actualizar tweet</button> */}
+              {user.uid === tweet.uid && <button onClick={() => deleteTweet(tweet.id)}>
                 Eliminar tweet
-              </button>
+              </button>}
+             
+              {/* <button onClick={() => deleteTweet(tweet.id)}>
+                Eliminar tweet
+              </button> */}
+              
               <button onClick={() => updateTweet(tweet)}>Me gusta</button>
               <hr />
             </div>

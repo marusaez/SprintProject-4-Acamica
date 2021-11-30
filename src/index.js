@@ -9,11 +9,11 @@ import ProtectedContext from "../src/components/Protected"
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AppProvider>
-        <ProtectedContext>
+      <ProtectedContext>
+        <AppProvider>
           <App />
-        </ProtectedContext>
-      </AppProvider>
+        </AppProvider>
+      </ProtectedContext>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

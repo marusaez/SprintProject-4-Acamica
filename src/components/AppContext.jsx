@@ -1,18 +1,29 @@
 import React, { createContext, useState, useEffect } from "react";
 import { firestore, storage, auth, loginGoogle, logout } from "../firebase";
+import { useProtectedContext } from "./Protected";
+
 
 export const AppContext = createContext();
 
 export const AppProvider = (props) => {
   const [tweets, setTweets] = useState([]);
-  const [body, setBody] = useState({});
+  // const [body, setBody] = useState({});
+  const [body, setBody] = useState({
+    tweet: "",
+    autor: "",
+    uid: "",
+    mail: "",
+    likes: "",
+  });
   const [messageTweet, setMessageTweet] = useState("");
-  const [userTweet, setUserTweet] = useState("");
+  // const [userTweet, setUserTweet] = useState("");
   const [edit, setEdit] = useState(false);
   const [file, setFile] = useState({});
   const [progress, setProgress] = useState(0);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const [user, setUser] = useProtectedContext();
 
+  
 
   //   const getAllTweets = () => {
   //     firestore.collection("tweets")
@@ -59,6 +70,7 @@ export const AppProvider = (props) => {
           }
           firestore
             .collection("tweets")
+            // .add({ ...body, uid: user.uid, image: url })
             .add({ ...body, image: url })
             .then(() => {
               console.log("Imagen cargada");
@@ -100,7 +112,7 @@ export const AppProvider = (props) => {
   const updateNewTweet = (tweet) => {
     firestore
       .doc(`tweets/${tweet.id}`)
-      .update({ message: messageTweet })
+      .update({ tweet: messageTweet })
       .then(() => {
         setEdit(false);
       })
@@ -145,10 +157,21 @@ export const AppProvider = (props) => {
       .collection("tweets")
       .onSnapshot((snapshot) => {
         const tweets = snapshot.docs.map((doc) => {
+          // return {
+          //   message: doc.data().message,
+          //   // uid: doc.data().user.uid,
+          //   user: doc.data().user,
+          //   likes: doc.data().likes,
+          //   image: doc.data().image || false,
+          //   id: doc.id,
+          // };
+    console.log("useEffect", doc.data())
+
           return {
-            message: doc.data().message,
-            // uid: doc.data().user.uid,
-            user: doc.data().user,
+            tweet: doc.data().tweet,
+            uid: doc.data().uid,
+            autor: doc.data().autor,
+            email: doc.data().email,
             likes: doc.data().likes,
             image: doc.data().image || false,
             id: doc.id,
@@ -168,8 +191,12 @@ export const AppProvider = (props) => {
 
   const handleChange = (e) => {
     let newTweet = {
-      ...body,
-      [e.target.name]: e.target.value,
+      // ...body,
+      // [e.target.name]: e.target.value,
+      tweet: e.target.value,
+      uid: user.uid,
+      email: user.email,
+      autor: user.displayName
     };
     setBody(newTweet);
   };
