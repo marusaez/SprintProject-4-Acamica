@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { AppContext } from "../context/AppContext";
 import SubmitTweet from "./SubmitTweet";
 import Tweet from "./Tweet";
-import { useProtectedContext } from "./Protected";
+import { useProtectedContext } from "../context/Protected";
 
 const Tweets = () => {
   const { body, deleteTweet, updateTweet, tweets, edit, setEdit, user } =

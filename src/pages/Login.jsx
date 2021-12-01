@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { firestore, auth, loginGoogle, logout } from "../firebase";
-import { useProtectedContext } from "../components/Protected";
-import { AppContext } from "../components/AppContext";
+import { useProtectedContext } from "../context/Protected";
+import { AppContext } from "../context/AppContext";
 
 const Login = () => {
   // const { user, setUser } = useContext(AppContext);

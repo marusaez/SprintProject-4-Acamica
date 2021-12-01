@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import App from './App.jsx';
-import { AppProvider } from "./components/AppContext";
-import ProtectedContext from "../src/components/Protected"
+import { AppProvider } from "./context/AppContext";
+import ProtectedContext from "./context/Protected"
 
 
 ReactDOM.render(

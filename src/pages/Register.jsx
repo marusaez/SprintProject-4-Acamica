@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { firestore, auth } from "../firebase";
-import { useProtectedContext } from "../components/Protected";
+import { useProtectedContext } from "../context/Protected";
 
 
 const Register = () => {

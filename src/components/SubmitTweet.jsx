@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AppContext } from "./AppContext";
-import { useProtectedContext } from "../components/Protected";
+import { AppContext } from "../context/AppContext";
+import { useProtectedContext } from "../context/Protected";
 import { logout } from "../firebase";
 
 

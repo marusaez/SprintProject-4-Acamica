@@ -13,7 +13,7 @@ export const AppProvider = (props) => {
     autor: "",
     uid: "",
     mail: "",
-    likes: "",
+    likes: 0,
   });
   const [messageTweet, setMessageTweet] = useState("");
   // const [userTweet, setUserTweet] = useState("");
@@ -98,6 +98,7 @@ export const AppProvider = (props) => {
   };
 
   const updateTweet = (tweet) => {
+    console.log("likes", tweet)
     firestore
       .doc(`tweets/${tweet.id}`)
       .update({ likes: tweet.likes + 1 })
@@ -165,14 +166,12 @@ export const AppProvider = (props) => {
           //   image: doc.data().image || false,
           //   id: doc.id,
           // };
-    console.log("useEffect", doc.data())
-
           return {
             tweet: doc.data().tweet,
             uid: doc.data().uid,
             autor: doc.data().autor,
             email: doc.data().email,
-            likes: doc.data().likes,
+            likes: doc.data().likes || 0,
             image: doc.data().image || false,
             id: doc.id,
           };
